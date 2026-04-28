@@ -1,53 +1,30 @@
+/*  main.c  - main */
+
 #include <xinu.h>
 
-void sndA(sid32 s1, sid32 s3);
-void sndB(sid32 s2, sid32 s1);
-void sndC(sid32 s3, sid32 s2);
-
-process main(void)
+process	main(void)
 {
-    sid32 s1, s2, s3;
+	pid32	shpid;		/* Shell process ID */
 
-    s1 = semcreate(1);
-    s2 = semcreate(0);
-    s3 = semcreate(0);
+	printf("\n\n");
 
-    resume(create(sndA, 1024, 20, "process A", 2, s1, s3));
-    resume(create(sndB, 1024, 20, "process B", 2, s2, s1));
-    resume(create(sndC, 1024, 20, "process C", 2, s3, s2));
+	/* Create a local file system on the RAM disk */
 
-    return OK;
-}
+	lfscreate(RAM0, 40, 20480);
 
-void sndA(sid32 s1, sid32 s3)
-{
-    while(1)
-    {
-        wait(s1);
-        printf("Selamat Datang A\n");
-        sleepms(1000);
-        signal(s3);
-    }
-}
+	/* Run the Xinu shell */
 
-void sndB(sid32 s2, sid32 s1)
-{
-    while(1)
-    {
-        wait(s2);
-        printf("Selamat Datang B\n");
-        sleepms(1000);
-        signal(s1);
-    }
-}
+	recvclr();
+	resume(shpid = create(shell, 8192, 50, "shell", 1, CONSOLE));
 
-void sndC(sid32 s3, sid32 s2)
-{
-    while(1)
-    {
-        wait(s3);
-        printf("Selamat Datang C\n");
-        sleepms(1000);
-        signal(s2);
-    }
+	/* Wait for shell to exit and recreate it */
+
+	while (TRUE) {
+	    if (receive() == shpid) {
+		sleepms(200);
+		kprintf("\n\nMain process recreating shell\n\n");
+		resume(shpid = create(shell, 4096, 20, "shell", 1, CONSOLE));
+	    }
+	}
+	return OK;
 }
