@@ -24,7 +24,7 @@ pri16   chname(
         prptr = &proctab[pid];
         oldprio = prptr->prprio;
         prptr->prprio = newprio;
-        kprintf("\n\nNew Syscall is easy\n\n");
+        kprintf("\n\n103062300092\n\n");
         restore(mask);
         return oldprio;
 }
