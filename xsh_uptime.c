@@ -39,7 +39,7 @@ shellcmd xsh_uptime(int nargs, char *args[])
         }
 
         printf("\n");
-        chname(1, 20);      /* Call new chname() syscall */
+        chname(1,20);      /* Call new chname() syscall */
 
         return 0;
 }
