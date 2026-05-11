@@ -10,7 +10,7 @@ shellcmd xsh_memlab(int argc, char *argv[]) {
         char *heap_ptr;
         uint32 size = 1024;
 
-        printf("\n === Praktikum By EL Goat ===");
+        printf("\n === Praktikum By Areskuyy ===");
 
         //Tampilan Alamat Segmen
         printf("\n1. Pemetaan Segmen Statis:\n");
