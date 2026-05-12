@@ -10,7 +10,7 @@ shellcmd xsh_memlab(int argc, char *argv[]) {
         char *heap_ptr;
         uint32 size = 1024;
 
-        printf("\n === Praktikum Sistem Operasi 24-04 ===");
+        printf("\n === Praktikum Sistem Operasi 24-01 ===");
 
         //Tampilan Alamat Segmen
         printf("\n1. Pemetaan Segmen Statis:\n");
